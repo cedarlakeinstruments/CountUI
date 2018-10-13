@@ -5,10 +5,10 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Tick")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Count UI")]
+[assembly: AssemblyDescription("Display for PRT232 Counter")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Cedar Lake Instruments")]
 [assembly: AssemblyProduct("Count UI")]
 [assembly: AssemblyCopyright("")]
 [assembly: AssemblyTrademark("")]

@@ -63,6 +63,7 @@ namespace Tick
                 _port.Parity = Parity.None;
                 _port.Encoding = new ASCIIEncoding();
                 _port.Open();
+                _port.DiscardInBuffer();
                 connected = true;
             }
             catch (IOException e)
@@ -73,6 +74,7 @@ namespace Tick
             if (connected)
             {
                 this.labelStatus.Text = String.Format("Connected to {0}", portName);
+                timer1.Enabled = true;
             }
 
             return connected;
@@ -82,7 +84,8 @@ namespace Tick
         {
             this._port.WriteLine("c");
             Thread.Sleep(50);
-            String returned = this._port.ReadExisting();
+            string returned = this._port.ReadExisting();
+            
             this.labelCount.Text = returned;
         }
 
