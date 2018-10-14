@@ -47,7 +47,7 @@
             this.labelCount.Location = new System.Drawing.Point(7, 22);
             this.labelCount.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelCount.Name = "labelCount";
-            this.labelCount.Size = new System.Drawing.Size(211, 75);
+            this.labelCount.Size = new System.Drawing.Size(211, 57);
             this.labelCount.TabIndex = 0;
             this.labelCount.Text = "0";
             this.labelCount.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -75,6 +75,7 @@
             // 
             // listBoxPorts
             // 
+            this.listBoxPorts.BackColor = System.Drawing.Color.Gainsboro;
             this.listBoxPorts.FormattingEnabled = true;
             this.listBoxPorts.ItemHeight = 20;
             this.listBoxPorts.Location = new System.Drawing.Point(170, 131);
@@ -103,6 +104,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.Gray;
             this.ClientSize = new System.Drawing.Size(315, 256);
             this.Controls.Add(this.labelStatus);
             this.Controls.Add(this.groupBox1);

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
+using System.Reflection;
 using System.Data;
 using System.Drawing;
 using System.Linq;
@@ -21,6 +21,8 @@ namespace Tick
         public CountUiForm()
         {
             InitializeComponent();
+            AssemblyName aName = Assembly.GetEntryAssembly().GetName();
+            Text += string.Format(" {0}.{1}", aName.Version.Major, aName.Version.Minor);
             string[] names = SerialPort.GetPortNames();
             if (names.Length  != 0)
             {
@@ -31,12 +33,13 @@ namespace Tick
             }
             else
             {
-                MessageBox.Show("No COM ports found");                
+                MessageBox.Show("No COM ports found");
+                return;              
             }
 
             if (Settings.Default.port != "")
             {
-                _connected = connect(Settings.Default.port);
+                connect(Settings.Default.port);
             }
             else
             {
@@ -44,7 +47,7 @@ namespace Tick
             }
         }
 
-        bool connect(string portName)
+        void connect(string portName)
         {
             timer1.Enabled = false;
 
@@ -53,7 +56,6 @@ namespace Tick
                 _port.Close();
             }
 
-            bool connected = false;
             try
             {
                 _port = new SerialPort(portName, 19200);
@@ -64,29 +66,40 @@ namespace Tick
                 _port.Encoding = new ASCIIEncoding();
                 _port.Open();
                 _port.DiscardInBuffer();
-                connected = true;
+                _connected = true;
             }
             catch (IOException e)
             {
                 this.labelStatus.Text = String.Format("Could not open {0}. {1}",portName, e.Message);
             }
 
-            if (connected)
+            if (_connected)
             {
                 this.labelStatus.Text = String.Format("Connected to {0}", portName);
                 timer1.Enabled = true;
             }
-
-            return connected;
         }
 
         void update()
         {
-            this._port.WriteLine("c");
-            Thread.Sleep(50);
-            string returned = this._port.ReadExisting();
-            
-            this.labelCount.Text = returned;
+            string returned = string.Empty;
+            try
+            {
+                this._port.WriteLine("c");
+                Thread.Sleep(50);
+                returned = this._port.ReadExisting();
+                this.labelCount.Text = returned == string.Empty ? labelCount.Text : returned;
+            }
+            catch (Exception)
+            {
+                labelStatus.Text = "Error! Not connected";
+                timer1.Enabled = false;
+                _connected = false;
+                if (_port.IsOpen)
+                {
+                    _port.Close();
+                }
+            }
         }
 
         private void timer1_Tick(object sender, EventArgs e)
