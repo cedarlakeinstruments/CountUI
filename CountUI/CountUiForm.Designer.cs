@@ -35,6 +35,7 @@
             this.listBoxPorts = new System.Windows.Forms.ListBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.labelStatus = new System.Windows.Forms.Label();
+            this.checkBoxSave = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -54,7 +55,7 @@
             // 
             // buttonReset
             // 
-            this.buttonReset.Location = new System.Drawing.Point(7, 127);
+            this.buttonReset.Location = new System.Drawing.Point(7, 91);
             this.buttonReset.Name = "buttonReset";
             this.buttonReset.Size = new System.Drawing.Size(75, 28);
             this.buttonReset.TabIndex = 1;
@@ -63,6 +64,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.checkBoxSave);
             this.groupBox1.Controls.Add(this.listBoxPorts);
             this.groupBox1.Controls.Add(this.labelCount);
             this.groupBox1.Controls.Add(this.buttonReset);
@@ -100,6 +102,16 @@
             this.labelStatus.Size = new System.Drawing.Size(315, 20);
             this.labelStatus.TabIndex = 11;
             // 
+            // checkBoxSave
+            // 
+            this.checkBoxSave.AutoSize = true;
+            this.checkBoxSave.Location = new System.Drawing.Point(7, 137);
+            this.checkBoxSave.Name = "checkBoxSave";
+            this.checkBoxSave.Size = new System.Drawing.Size(64, 24);
+            this.checkBoxSave.TabIndex = 13;
+            this.checkBoxSave.Text = "Save";
+            this.checkBoxSave.UseVisualStyleBackColor = true;
+            // 
             // CountUiForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -115,6 +127,7 @@
             this.Text = "Counter Display";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -127,6 +140,7 @@
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Label labelStatus;
         private System.Windows.Forms.ListBox listBoxPorts;
+        private System.Windows.Forms.CheckBox checkBoxSave;
     }
 }
 

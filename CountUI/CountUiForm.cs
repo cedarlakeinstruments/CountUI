@@ -17,6 +17,7 @@ namespace Tick
     {
         bool _connected;
         SerialPort _port;
+        StreamWriter _fileWriter;
 
         public CountUiForm()
         {
@@ -77,6 +78,15 @@ namespace Tick
             {
                 this.labelStatus.Text = String.Format("Connected to {0}", portName);
                 timer1.Enabled = true;
+
+                // Open file for logging
+                if (checkBoxSave.Checked)
+                {
+                    string file = string.Format("Count-{0}.csv", DateTime.Now.ToString("MMMMdd"));
+                    string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), file);
+                    _fileWriter = File.CreateText(path);
+                    checkBoxSave.Enabled = false;
+                }
             }
         }
 
@@ -85,10 +95,15 @@ namespace Tick
             string returned = string.Empty;
             try
             {
-                this._port.WriteLine("c");
+                this._port.Write("c\r");
                 Thread.Sleep(50);
                 returned = this._port.ReadExisting();
                 this.labelCount.Text = returned == string.Empty ? labelCount.Text : returned;
+                if (_fileWriter != null)
+                {
+                    _fileWriter.WriteLine(string.Format("{0},{1}", DateTime.Now, this.labelCount.Text));
+                    _fileWriter.Flush();
+                }
             }
             catch (Exception)
             {
