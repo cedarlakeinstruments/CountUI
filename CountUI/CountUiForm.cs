@@ -18,8 +18,10 @@ namespace Tick
         bool _connected;
         SerialPort _port;
         StreamWriter _fileWriter;
+        enum ProductType {PRT232C, PRT232F};
+        ProductType _productType = ProductType.PRT232C;
 
-        public CountUiForm()
+        public  CountUiForm()
         {
             InitializeComponent();
             AssemblyName aName = Assembly.GetEntryAssembly().GetName();
@@ -95,7 +97,16 @@ namespace Tick
             string returned = string.Empty;
             try
             {
-                this._port.Write("c\r");
+                if (_productType == ProductType.PRT232F)
+                {
+                    // Read channel 1 count
+                    _port.Write("c,1\r");
+                }
+                else
+                {
+                    this._port.Write("c\r");
+                }
+
                 Thread.Sleep(50);
                 returned = this._port.ReadExisting();
                 this.labelCount.Text = returned == string.Empty ? labelCount.Text : returned;
@@ -144,6 +155,19 @@ namespace Tick
             Settings.Default.port = (string)((ListBox)sender).SelectedItem;
             Settings.Default.Save();
             connect(Settings.Default.port);
+        }
+
+        private void radioButtonC_CheckedChanged(object sender, EventArgs e)
+        {
+            RadioButton s = sender as RadioButton;
+            if (s.Checked)
+            {
+                _productType = ProductType.PRT232C;
+            }
+            else
+            {
+                _productType = ProductType.PRT232F;
+            }
         }
     }
 }
