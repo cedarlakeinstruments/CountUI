@@ -169,5 +169,31 @@ namespace Tick
                 _productType = ProductType.PRT232F;
             }
         }
+
+
+        /// <summary>
+        /// Clear count
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void buttonReset_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (_productType == ProductType.PRT232F)
+                {
+                    // Clear channel 1 count
+                    _port.Write("z,1\r");
+                }
+                else
+                {
+                    this._port.Write("z\r");
+                }
+            }
+            catch (Exception)
+            {
+                labelStatus.Text = "Error!";
+            }
+        }
     }
 }
